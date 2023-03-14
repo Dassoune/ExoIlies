@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon compte</title>
+</head>
+<body>
+    <a href=""><h1>Votre compte NeoNess</h1></a>
+    <h2>Bienvenue</h2>
+  <% var userID = idUser; %>
+<div>  
+   <h4>Entrez les informations de votre session</h4>
+      <form id="dailyAct" method="POST" action="/createdaily">
+        <input type="hidden" name="table" value="Activities">
+        <input type="hidden" name="iduser" value=<%= userID %>>
+        <select name="activite" id="menuActivite">
+          <option value="valueActivity">Choisissez une activité</option>
+          </select>
+        <input type="number" id="duree_activite" min="1" max="360" name="dureeActivite"> minutes
+        <button name="addID" id="addID">AJOUTER</button>
+      </form>
+<br>
+      <div id="liste">
+        <h1>Récap de vos sessions</h1>
+        <table>
+        <tr>
+            <th>Date</th>
+            <th>Activité</th>
+            <th>Durée</th>  
+            <th>Calories Brûlés</th>
+        </tr>
+            <%= idUser %>
+    </table>
+    </div>
+</div> 
+    <body>
+    <script>
+        sessionStorage.setItem("is_logged", true);
+        let idUser =  <%= userID %>;  
+        sessionStorage.setItem("id_user", idUser );
+        
+
+        window.addEventListener("load", function() {
+    console.log("Hello windowloaded!");
+    fetch("/opt")
+    .then(res => res.text())
+    .then(res => {
+      myresults = JSON.parse(res);
+      let activite = document.getElementById("menuActivite");
+
+      myresults.forEach((item) => {
+        let opt = document.createElement("option");
+        opt.value = item.idActivity;
+        opt.text = item.activityName;
+        activite.add(opt);
+      });
+    });
+    fetch("/testos")
+    .then(res => res.text())
+    .then(res => {
+      display_results = JSON.parse(res);
+    });
+  });
+    </script>
+</body>
+</html>
